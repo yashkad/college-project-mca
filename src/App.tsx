@@ -21,7 +21,12 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <div className="flex">
+      {/* <div className="bg-slate-800 w-12"></div> */}
+      <RouterProvider router={router} />;
+    </div>
+  );
 };
 
 export default App;

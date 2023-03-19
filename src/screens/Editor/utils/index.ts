@@ -39,3 +39,26 @@ export const ThemesList = [
   { name: "Xcode Dark", theme: xcodeDark },
   { name: "Xcode Light", theme: xcodeLight },
 ];
+
+export const fontSize = [
+  {
+    name: "small",
+    size: "14px",
+    tw: "text-xs",
+  },
+  {
+    name: "normal",
+    size: "16px",
+    tw: "text-base",
+  },
+  {
+    name: "large",
+    size: "18px",
+    tw: "text-lg",
+  },
+  {
+    name: "big",
+    size: "20px",
+    tw: "text-xl",
+  },
+];
