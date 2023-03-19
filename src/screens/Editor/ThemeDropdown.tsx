@@ -6,6 +6,7 @@ export default function ThemeDropdown({
   options,
   selectedOption,
   setOption,
+  initialValue = "select option",
 }: any) {
   return (
     <div className="">
@@ -20,7 +21,9 @@ export default function ThemeDropdown({
         <Listbox.Button
           className={` bg-white border-2 rounded-lg px-5 py-1 text-xs `}
         >
-          <span>{selectedOption.name}</span>
+          <span>
+            {selectedOption.name == null ? initialValue : selectedOption.name}
+          </span>
         </Listbox.Button>
 
         <Listbox.Options
@@ -30,7 +33,7 @@ export default function ThemeDropdown({
         >
           {options.map((option: any) => (
             <Listbox.Option
-              key={option}
+              key={option.name}
               value={option}
               // disabled={option.unavailable}
               className={`p-1 text-sm font-normal focus:bg-slate-900 hover:bg-gray-400 hover:text-white ${

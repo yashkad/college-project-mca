@@ -62,3 +62,21 @@ export const fontSize = [
     tw: "text-xl",
   },
 ];
+
+export const languages = [
+  {
+    name: "Java",
+  },
+  {
+    name: "Python",
+  },
+  {
+    name: "Cpp",
+  },
+  {
+    name: "Dart",
+  },
+  {
+    name: "Ruby",
+  },
+];
