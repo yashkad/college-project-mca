@@ -13,7 +13,7 @@ router.post("/submitCode", async (req, res) => {
   const { code, langId, stdin } = req.body;
   const data = await judge0.getCodeToken(code, langId, stdin);
   const result = await judge0.getOutputByToken(data.token);
- 
+  // console.log("result",result);
   res.send(result);
 });
 

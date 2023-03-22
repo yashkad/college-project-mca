@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Editor from "./screens/Editor";
 import Home from "./screens/Home";
+import Ide from "./screens/Ide";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/editor",
     element: <Editor />,
+  },
+  {
+    path: "/ide",
+    element: <Ide />,
   },
 ]);
 

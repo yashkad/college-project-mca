@@ -3,16 +3,20 @@ const app = express();
 const server = require("http").createServer(app);
 const cors = require("cors");
 const apiRoute = require("./routes/openAi");
+const jdg0 = require("./routes/judgeAPI");
 require("dotenv").config();
 
 const corsOptions = {
-  origin: "http://127.0.0.1:5173",
+  // origin: "http://127.0.0.1:5173",
   optionsSuccessStatus: 200,
+  origin: true,
+  credentials: true
 };
 
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use("/api", apiRoute);
+app.use("/judge", jdg0)
 
 app.get("/", (req, res) => {
   //   res.redirect(`/${v4()}`);
