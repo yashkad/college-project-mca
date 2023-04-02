@@ -7,6 +7,7 @@ import { dracula } from "@uiw/codemirror-themes-all";
 import ThemeDropdown from "./ThemeDropdown";
 import { CursorArrowRaysIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
+import Sidebar from "../../assets/Sidebar";
 
 function Editor() {
   const onChange = React.useCallback((value: any, viewUpdate: any) => {
@@ -44,61 +45,72 @@ function Editor() {
   };
 
   return (
-    <div className="flex w-screen h-screen flex-col">
-      <div className="bg-gradient-to-l from-gray-700 via-gray-900 to-black flex flex-row space-x-2 p-1 px-4 items-center">
-        <CursorArrowRaysIcon className="h-8 text-green-400 hover:text-green-600" />
-        <div className="flex w-full justify-end flex-row space-x-4 pr-6">
-          <ThemeDropdown
-            options={languages}
-            selectedOption={toLang}
-            setOption={setToLang}
-            initialValue="Translation language"
-          />
-          <ThemeDropdown
-            options={ThemesList}
-            selectedOption={theme}
-            setOption={setTheme}
-          />
-          <ThemeDropdown
-            options={fontSize}
-            selectedOption={size}
-            setOption={setFontSize}
-          />
-        </div>
-      </div>
-      <div className="flex flex-1 flex-row">
-        <CodeMirror
-          value={editorText}
-          height="100%"
-          className={`w-full h-full border-r-8 ${size.tw}`}
-          extensions={[javascript({ jsx: true })]}
-          onChange={onChange}
-          theme={theme.theme}
-        />
-        <CodeMirror
-          value={`${outputText}`}
-          height="100%"
-          className={`w-2/3 text-base ${size.tw}`}
-          extensions={[javascript({ jsx: true })]}
-          onChange={onChange}
-          // theme={ThemesList[0].theme}
-          readOnly={true}
-          editable={false}
-        />
-      </div>
+    <div className="flex">
 
-      {toLang?.name && (
-        <div className=" absolute bottom-5 right-5">
-          <button
-            onClick={translateLanguage}
-            className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white  focus:ring-2 focus:outline-none focus:ring-blue-300 "
-          >
-            <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
-              Translate code
-            </span>
-          </button>
+      <Sidebar active="/editor" />
+      <div className="flex  w-[94vw] h-screen flex-col">
+        <div className="bg-gradient-to-l from-gray-700 via-gray-900 to-black flex flex-row space-x-2 p-1 px-4 items-center">
+          {/* <CursorArrowRaysIcon className="h-8 text-green-400 hover:text-green-600" /> */}
+          <div className="flex w-full justify-between flex-row space-x-4 pr-6">
+            <div className="flex justify-between flex-row space-x-4 pr-6">
+
+              <ThemeDropdown
+                options={ThemesList}
+                selectedOption={theme}
+                setOption={setTheme}
+              />
+              <ThemeDropdown
+                options={languages}
+                selectedOption={toLang}
+                setOption={setToLang}
+                initialValue="Translation language"
+              />
+
+              <ThemeDropdown
+                options={fontSize}
+                selectedOption={size}
+                setOption={setFontSize}
+              />
+            </div>
+            <div>
+              {toLang?.name && (
+                <div className=" ">
+                  <button
+                    onClick={translateLanguage}
+                    className="relative inline-flex items-center justify-center p-0.5  overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white  focus:ring-2 focus:outline-none focus:ring-blue-300 "
+                  >
+                    <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
+                      Translate code
+                    </span>
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-      )}
+        <div className="flex flex-1 flex-row">
+          <CodeMirror
+            value={editorText}
+            height="100%"
+            className={`w-full h-full border-r-8 ${size.tw}`}
+            extensions={[javascript({ jsx: true })]}
+            onChange={onChange}
+            theme={theme.theme}
+          />
+          <CodeMirror
+            value={`${outputText}`}
+            height="100%"
+            className={`w-2/3 text-base ${size.tw}`}
+            extensions={[javascript({ jsx: true })]}
+            onChange={onChange}
+            // theme={ThemesList[0].theme}
+            readOnly={true}
+            editable={false}
+          />
+        </div>
+
+
+      </div>
     </div>
   );
 }

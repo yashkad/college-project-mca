@@ -9,6 +9,7 @@ import {
 import Editor from "./screens/Editor";
 import Home from "./screens/Home";
 import Ide from "./screens/Ide";
+import Sidebar from "./assets/Sidebar";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,7 @@ const App = () => {
   return (
     <div className="flex">
       {/* <div className="bg-slate-800 w-12"></div> */}
-      <RouterProvider router={router} />;
+      <RouterProvider router={router} />
     </div>
   );
 };

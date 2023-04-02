@@ -31,6 +31,7 @@ import "ace-builds/src-noconflict/theme-textmate";
 import { submitCode } from "./Service/newService";
 
 import { langData, languages, themes } from './utils'
+import Sidebar from "../../assets/Sidebar";
 
 
 
@@ -74,166 +75,177 @@ const Editor = () => {
     };
 
     return (
-        <div className="px-6 border-2 rounded-md  m-5">
-            {state && (
-                <div className=" mt-5 bg-slate-200 rounded">
-                    <div className="text-center ">
-                        <p className="text-base font-light">You are solving :</p>
-                        <h2 className="text-xl font-semibold font-mono">{state.title}</h2>
+        <div className="flex">
+
+
+            <Sidebar active="Run" />
+            <div className="flex flex-col w-[94vw] h-screen">
+                {state && (
+                    <div className=" mt-5 bg-slate-200 rounded">
+                        <div className="text-center ">
+                            <p className="text-base font-light">You are solving :</p>
+                            <h2 className="text-xl font-semibold font-mono">{state.title}</h2>
+                        </div>
                     </div>
-                </div>
-            )}
-            <div className="  bg-slate-200 my-5 rounded-xl flex flex-row p-4 justify-between w-auto">
-                <div className="flex flex-row ">
-                    <div className="mr-10">
-                        <select
-                            id="countries"
-                            onChange={(e) => setSelectedTheme(e.target.value)}
-                            className="select  select-primary w-full max-w-xs"
-                        >
-                            {themes.map((theme) => {
-                                return <option value={theme}>{theme}</option>;
-                            })}
-                        </select>
+                )}
+                {/* Navbar */}
+                <div className="flex flex-auto  bg-gray-900 md:flex md:flex-row p-4 justify-between">
+                    <div className="md:flex md:flex-row">
+                        <div className="mr-10 mb-4">
+                            <select
+                                id="countries"
+                                onChange={(e) => setSelectedTheme(e.target.value)}
+                                className="select select-primary w-full max-w-xs"
+                            >
+                                {themes.map((theme) => {
+                                    return <option value={theme}>{theme}</option>;
+                                })}
+                            </select>
+                        </div>
+
+                        <div>
+                            <select
+                                className="select mb-3 "
+                                onChange={(e) => {
+                                    setEditorLang(e.target.value);
+                                    console.log(typeof e.target.value);
+                                }}
+                            >
+                                <option disabled selected>
+                                    Select Language
+                                </option>
+                                {langData.map((item) => {
+                                    return <option value={item.id}>{item.name}</option>;
+                                })}
+                            </select>
+                        </div>
                     </div>
 
-                    <div>
-                        <select
-                            className="select "
-                            onChange={(e) => {
-                                setEditorLang(e.target.value);
-                                console.log(typeof e.target.value);
+                    <div
+                        className={`${loading ? "loading" : ""} btn btn-wide `}
+                        onClick={handleSubmit}
+                    >
+                        <button className="px-4 mx-3  py-2 rounded-md text-white bg-blue-500 hover:bg-blue-600">Run code</button>
+                    </div>
+                </div>
+
+                <div className="grid md:grid-cols-2">
+                    {/* IDE */}
+                    <div className="h-1/2 ">
+                        <AceEditor
+                            width="100%"
+                            height="90vh"
+                            placeholder="Enter your code here"
+                            mode="java"
+                            // mode={`${editorLang}`}
+                            theme={themeSelected}
+                            name="blah2"
+                            //   onLoad={this.onLoad}
+                            onChange={(a) => setCode(a)}
+                            fontSize={28}
+                            showPrintMargin={true}
+                            showGutter={true}
+                            highlightActiveLine={true}
+                            value={code}
+                            setOptions={{
+                                enableBasicAutocompletion: true,
+                                enableLiveAutocompletion: true,
+                                enableSnippets: true,
+                                showLineNumbers: true,
+                                tabSize: 2,
                             }}
-                        >
-                            <option disabled selected>
-                                Select Language
-                            </option>
-                            {langData.map((item) => {
-                                return <option value={item.id}>{item.name}</option>;
-                            })}
-                        </select>
-                    </div>
-                </div>
-
-                <div
-                    className={`${loading ? "loading" : ""} btn btn-wide `}
-                    onClick={handleSubmit}
-                >
-                    <button className="">Run code</button>
-                </div>
-            </div>
-
-            <div className="md:flex md:flex-row ">
-                {/* IDE */}
-                <div className="md:w-1/2 h-1/2 md:mr-2">
-                    <AceEditor
-                        width="100%"
-                        height="90vh"
-                        placeholder="Enter your code here"
-                        mode="java"
-                        // mode={`${editorLang}`}
-                        theme={themeSelected}
-                        name="blah2"
-                        //   onLoad={this.onLoad}
-                        onChange={(a) => setCode(a)}
-                        fontSize={28}
-                        showPrintMargin={true}
-                        showGutter={true}
-                        highlightActiveLine={true}
-                        value={code}
-                        setOptions={{
-                            enableBasicAutocompletion: true,
-                            enableLiveAutocompletion: true,
-                            enableSnippets: true,
-                            showLineNumbers: true,
-                            tabSize: 2,
-                        }}
-                    />
-                </div>
-
-                <div className="divider divider-horizontal"></div>
-                {/* Input and Output Box */}
-                <div className="md:w-1/2 h-1/2 ">
-                    {/* Input Box */}
-                    <div className=" md:hidden">
-                        <label htmlFor="message" className="block mb-2 text-sm font-medium ">
-                            {"Input"}
-                        </label>
-                        <textarea
-                            value={userInput}
-                            onChange={(e) => setUserInput(e.target.value)}
-                            id="message"
-                            rows={5}
-                            className={`resize-none block p-2.5 w-full md:h-1/2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 ${loading ? "cursor-not-allowed" : ""
-                                }`}
-                            placeholder="Your Input..."
-                            disabled={loading ? true : false}
-                        ></textarea>
+                        />
                     </div>
 
-                    {/* Output Box */}
-                    <div className="">
-                        <label htmlFor="message" className="block mb-2 text-sm font-medium ">
-                            {"Output"}
-                        </label>
-                        <pre
-                            id="message"
-                            // rows=""
-                            className="overflow-y-scroll block p-2.5 w-full h-[50vh] text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
-                        // placeholder="Your message..."
-                        // disabled
-                        // value={codeOutput}
-                        >
-                            {loading ? (
-                                <div className=" rounded-md p-4 w-full mx-auto">
-                                    <div className="animate-pulse flex space-x-4">
-                                        <div className="flex-1 space-y-6 py-1">
-                                            <div className="h-2 bg-slate-700 rounded"></div>
-                                            <div className="space-y-3">
-                                                <div className="grid grid-cols-3 gap-4">
-                                                    <div className="h-2 bg-slate-700 rounded col-span-2"></div>
-                                                    <div className="h-2 bg-slate-700 rounded col-span-1"></div>
-                                                </div>
+                    {/* <div className="divider divider-horizontal"></div> */}
+                    {/* Input and Output Box */}
+                    <div className="grid">
+                        {/* Input Box */}
+                        {/* <div className=" md:hidden">
+                            <label htmlFor="message" className="block mb-2 text-sm font-medium ">
+                                {"Input"}
+                            </label>
+                            <textarea
+                                value={userInput}
+                                onChange={(e) => setUserInput(e.target.value)}
+                                id="message"
+                                rows={5}
+                                className={`resize-none block p-2.5 w-full md:h-1/2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 ${loading ? "cursor-not-allowed" : ""
+                                    }`}
+                                placeholder="Your Input..."
+                                disabled={loading ? true : false}
+                            ></textarea>
+                        </div> */}
+
+                        {/* <div className="flex flex-col"> */}
+
+
+                        {/* Output Box */}
+                        <div className="">
+                            <label htmlFor="message" className="block mb-2  mx-2 text-sm font-medium ">
+                                {"Output"}
+                            </label>
+                            <pre
+                                id="message"
+                                // rows=""
+                                className="overflow-y-scroll block p-2.5 w-full h-[35vh] text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+                            // placeholder="Your message..."
+                            // disabled
+                            // value={codeOutput}
+                            >
+                                {loading ? (
+                                    <div className=" rounded-md p-4 w-full mx-auto">
+                                        <div className="animate-pulse flex space-x-4">
+                                            <div className="flex-1 space-y-6 py-1">
                                                 <div className="h-2 bg-slate-700 rounded"></div>
+                                                <div className="space-y-3">
+                                                    <div className="grid grid-cols-3 gap-4">
+                                                        <div className="h-2 bg-slate-700 rounded col-span-2"></div>
+                                                        <div className="h-2 bg-slate-700 rounded col-span-1"></div>
+                                                    </div>
+                                                    <div className="h-2 bg-slate-700 rounded"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            ) : (
-                                <div>
-                                    {" "}
-                                    {codeOutput === undefined ? (
-                                        <div className="text-xl">
-                                            <span className="text-red-700"> Error:</span> Something is
-                                            Wrong
-                                        </div>
-                                    ) : (
-                                        codeOutput
-                                    )}
-                                </div>
-                            )}
-                        </pre>
-                    </div>
+                                ) : (
+                                    <div>
+                                        {" "}
+                                        {codeOutput === undefined ? (
+                                            <div className="text-xl">
+                                                <span className="text-red-700"> Error:</span> Something is
+                                                Wrong
+                                            </div>
+                                        ) : (
+                                            codeOutput
+                                        )}
+                                    </div>
+                                )}
+                            </pre>
+                        </div>
 
-                    {/* Input Box */}
-                    <div className="hidden md:block">
-                        <label htmlFor="message" className="block mb-2 text-sm font-medium ">
-                            {"Input"}
-                        </label>
-                        <textarea
-                            value={userInput}
-                            onChange={(e) => setUserInput(e.target.value)}
-                            id="message"
-                            rows={5}
-                            className={`resize-none block p-2.5 w-full md:h-1/2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 ${loading ? "cursor-not-allowed" : ""
-                                }`}
-                            placeholder="Your Input..."
-                            disabled={loading ? true : false}
-                        ></textarea>
+                        {/* Input Box */}
+                        <div className="">
+                            <label htmlFor="message" className="block mb-2 text-sm font-medium ">
+                                {"Input"}
+                            </label>
+                            <textarea
+                                value={userInput}
+                                onChange={(e) => setUserInput(e.target.value)}
+                                id="message"
+                                rows={5}
+                                className={`resize-none block p-2.5 w-full md:h-1/2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 ${loading ? "cursor-not-allowed" : ""
+                                    }`}
+                                placeholder="Your Input..."
+                                disabled={loading ? true : false}
+                            ></textarea>
+                        </div>
+
+                        {/* </div> */}
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

@@ -19,7 +19,7 @@ export default function ThemeDropdown({
         multiple={false}
       >
         <Listbox.Button
-          className={` bg-white border-2 rounded-lg px-5 py-1 text-xs `}
+          className={` bg-white border-2 rounded-lg px-5 py-2.5 text-xs `}
         >
           <span>
             {selectedOption.name == null ? initialValue : selectedOption.name}
@@ -36,7 +36,7 @@ export default function ThemeDropdown({
               key={option.name}
               value={option}
               // disabled={option.unavailable}
-              className={`p-1 text-sm font-normal focus:bg-slate-900 hover:bg-gray-400 hover:text-white ${
+              className={`px-1 text-sm font-normal focus:bg-slate-900 hover:bg-gray-400 hover:text-white ${
                 option.name === selectedOption.name &&
                 "bg-red-400 text-slate-50"
               }`}
