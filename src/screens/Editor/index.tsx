@@ -14,7 +14,7 @@ function Editor() {
   }, []);
 
   const [theme, setTheme] = useState(ThemesList[5]);
-  const [size, setFontSize] = useState(fontSize[0]);
+  const [size, setFontSize] = useState(fontSize[2]);
   const [toLang, setToLang] = useState({ name: null });
 
   const [editorText, setEditorText] = useState("// write your code here \n");
