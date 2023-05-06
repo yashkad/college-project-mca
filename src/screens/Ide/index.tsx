@@ -1,31 +1,38 @@
 import React, { useState } from "react";
-import AceEditor from "react-ace";
-import { useLocation } from "react-router-dom";
-import "ace-builds/src-noconflict/mode-java";
-import "ace-builds/src-noconflict/mode-python";
-import "ace-builds/src-noconflict/mode-javascript";
-import "ace-builds/src-noconflict/mode-kotlin";
-import "ace-builds/src-noconflict/mode-clojure";
-import "ace-builds/src-noconflict/mode-csharp";
-// import "ace-builds/src-noconflict/mode-php";
-import "ace-builds/src-noconflict/mode-r";
-import "ace-builds/src-noconflict/mode-ruby";
-import "ace-builds/src-noconflict/mode-rust";
-import "ace-builds/src-noconflict/mode-scala";
-import "ace-builds/src-noconflict/mode-swift";
-import "ace-builds/src-noconflict/mode-sql";
-import "ace-builds/src-noconflict/mode-golang";
-import "ace-builds/src-noconflict/mode-elixir";
 
-import "ace-builds/src-noconflict/theme-github";
-import "ace-builds/src-noconflict/theme-monokai";
-import "ace-builds/src-noconflict/theme-terminal";
-import "ace-builds/src-noconflict/theme-tomorrow";
-import "ace-builds/src-noconflict/theme-kuroir";
-import "ace-builds/src-noconflict/theme-xcode";
-import "ace-builds/src-noconflict/theme-pastel_on_dark";
-import "ace-builds/src-noconflict/theme-solarized_dark";
-import "ace-builds/src-noconflict/theme-textmate";
+import CodeMirror from "@uiw/react-codemirror";
+
+import { javascript } from "@codemirror/lang-javascript";
+import { fontSize, ThemesList } from "../Editor/utils";
+import ThemeDropdown from "../Editor/ThemeDropdown";
+
+// import AceEditor from "react-ace";
+import { useLocation } from "react-router-dom";
+// import "ace-builds/src-noconflict/mode-java";
+// import "ace-builds/src-noconflict/mode-python";
+// import "ace-builds/src-noconflict/mode-javascript";
+// import "ace-builds/src-noconflict/mode-kotlin";
+// import "ace-builds/src-noconflict/mode-clojure";
+// import "ace-builds/src-noconflict/mode-csharp";
+// import "ace-builds/src-noconflict/mode-php";
+// import "ace-builds/src-noconflict/mode-r";
+// import "ace-builds/src-noconflict/mode-ruby";
+// import "ace-builds/src-noconflict/mode-rust";
+// import "ace-builds/src-noconflict/mode-scala";
+// import "ace-builds/src-noconflict/mode-swift";
+// import "ace-builds/src-noconflict/mode-sql";
+// import "ace-builds/src-noconflict/mode-golang";
+// import "ace-builds/src-noconflict/mode-elixir";
+
+// import "ace-builds/src-noconflict/theme-github";
+// import "ace-builds/src-noconflict/theme-monokai";
+// import "ace-builds/src-noconflict/theme-terminal";
+// import "ace-builds/src-noconflict/theme-tomorrow";
+// import "ace-builds/src-noconflict/theme-kuroir";
+// import "ace-builds/src-noconflict/theme-xcode";
+// import "ace-builds/src-noconflict/theme-pastel_on_dark";
+// import "ace-builds/src-noconflict/theme-solarized_dark";
+// import "ace-builds/src-noconflict/theme-textmate";
 
 // import { submitCodeService, getLanguagesService } from "./Service/service";
 import { submitCode } from "./Service/newService";
@@ -33,8 +40,16 @@ import { submitCode } from "./Service/newService";
 import { langData, languages, themes } from "./utils";
 
 const Editor = () => {
+  const onChange = React.useCallback((value: any, viewUpdate: any) => {
+    setEditorText(value);
+  }, []);
+
+  const [editorText, setEditorText] = useState("// write your code here \n");
+  const [outputText, setOutputText] = useState("// Output : \n");
   const { state } = useLocation();
-  const [themeSelected, setSelectedTheme] = useState(themes[6]);
+  // const [themeSelected, setSelectedTheme] = useState(themes[6]);
+  const [theme, setTheme] = useState(ThemesList[5]);
+  const [size, setFontSize] = useState(fontSize[2]);
   const [code, setCode] = useState<string>("");
   const [showLangDrop, setShowLangDrop] = useState<boolean>(false);
   const [editorLang, setEditorLang] = useState<any | null>(null);
@@ -82,7 +97,7 @@ const Editor = () => {
       )}
       <div className="  bg-slate-200 my-5 rounded-xl flex flex-row p-4 justify-between w-auto">
         <div className="flex flex-row ">
-          <div className="mr-10">
+          {/* <div className="mr-10">
             <select
               id="countries"
               onChange={(e) => setSelectedTheme(e.target.value)}
@@ -92,7 +107,12 @@ const Editor = () => {
                 return <option value={theme}>{theme}</option>;
               })}
             </select>
-          </div>
+          </div> */}
+          <ThemeDropdown
+            options={ThemesList}
+            selectedOption={theme}
+            setOption={setTheme}
+          />
 
           <div>
             <select
@@ -122,8 +142,8 @@ const Editor = () => {
 
       <div className="md:flex md:flex-row ">
         {/* IDE */}
-        <div className="md:w-1/2 h-1/2 md:mr-2">
-          <AceEditor
+        <div className="md:w-1/2  md:mr-2">
+          {/* <AceEditor
             width="100%"
             height="90vh"
             placeholder="Enter your code here"
@@ -145,6 +165,14 @@ const Editor = () => {
               showLineNumbers: true,
               tabSize: 2,
             }}
+          /> */}
+          <CodeMirror
+            value={editorText}
+            height="100%"
+            className={`w-full h-full border-r-8 ${size.tw}`}
+            // extensions={[javascript({ jsx: true })]}
+            onChange={(a) => setCode(a)}
+            theme={theme.theme}
           />
         </div>
 
@@ -164,9 +192,8 @@ const Editor = () => {
               onChange={(e) => setUserInput(e.target.value)}
               id="message"
               rows={5}
-              className={`resize-none block p-2.5 w-full md:h-1/2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 ${
-                loading ? "cursor-not-allowed" : ""
-              }`}
+              className={`resize-none block p-2.5 w-full md:h-1/2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 ${loading ? "cursor-not-allowed" : ""
+                }`}
               placeholder="Your Input..."
               disabled={loading ? true : false}
             ></textarea>
@@ -184,9 +211,9 @@ const Editor = () => {
               id="message"
               // rows=""
               className="overflow-y-scroll block p-2.5 w-full h-[50vh] text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
-              // placeholder="Your message..."
-              // disabled
-              // value={codeOutput}
+            // placeholder="Your message..."
+            // disabled
+            // value={codeOutput}
             >
               {loading ? (
                 <div className=" rounded-md p-4 w-full mx-auto">
@@ -232,9 +259,8 @@ const Editor = () => {
               onChange={(e) => setUserInput(e.target.value)}
               id="message"
               rows={5}
-              className={`resize-none block p-2.5 w-full md:h-1/2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 ${
-                loading ? "cursor-not-allowed" : ""
-              }`}
+              className={`resize-none block p-2.5 w-full md:h-1/2 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 ${loading ? "cursor-not-allowed" : ""
+                }`}
               placeholder="Your Input..."
               disabled={loading ? true : false}
             ></textarea>
