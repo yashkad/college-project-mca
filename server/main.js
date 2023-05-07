@@ -31,7 +31,7 @@ app.use("/peerServer", peerServer);
 
 app.get("/", (req, res) => {
   //   res.redirect(`/${v4()}`);
-  // res.send("This is the root of the api page");
+  res.send("This is the root of the api page");
   res.redirect(`/${v4()}`);
 });
 
