@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = `http://localhost:3000`;
+const url = `https://mca-collage-project-backent.vercel.app`;
 
 const getLangId = async (): Promise<any> => {
   return await axios

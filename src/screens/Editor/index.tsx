@@ -32,7 +32,7 @@ function Editor() {
       code: editorText,
     });
     let reqOptions = {
-      url: "http://localhost:3000/api/translateCode",
+      url: "https://mca-collage-project-backent.vercel.app/api/translateCode",
       method: "POST",
       headers: headersList,
       data: bodyContent,
