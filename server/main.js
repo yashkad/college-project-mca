@@ -10,15 +10,17 @@ const { v4 } = require("uuid");
 
 const socket = require("socket.io")(server, {
   cors: {
-    origin: "http://127.0.0.1:5173",
+    origin: "https://codeunion.vercel.app",
   },
 });
 
 const corsOptions = {
-  origin: "http://127.0.0.1:5173",
+  origin: "https://codeunion.vercel.app",
   optionsSuccessStatus: 200,
   origin: true,
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 const peerServer = ExpressPeerServer(server, { debug: true });
