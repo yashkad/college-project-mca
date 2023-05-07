@@ -16,6 +16,8 @@ interface SubmitCodeData {
   langId: any;
   stdin: any;
   expected_output?: string;
+  headers: any;
+  withCredentials: any;
 }
 
 const submitCode = async (
@@ -30,6 +32,11 @@ const submitCode = async (
     langId: langId,
     stdin: stdin,
     expected_output: expectedOutput,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+
   };
 
   // console.log("data:",data);
