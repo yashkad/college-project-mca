@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { fontSize, languages, ThemesList } from "./utils/index";
@@ -16,11 +16,15 @@ function Editor() {
   const [theme, setTheme] = useState(ThemesList[5]);
   const [size, setFontSize] = useState(fontSize[2]);
   const [toLang, setToLang] = useState({ name: null });
+  const [currentLang, setCurrentLang] = useState({ name: null });
 
   const [editorText, setEditorText] = useState("// write your code here \n");
   const [outputText, setOutputText] = useState("// Output : \n");
+  const [loading, setLoading] = useState(false);
 
   const translateLanguage = async () => {
+    // alert(1);
+    setLoading(true);
     let headersList = {
       Accept: "*/*",
       "User-Agent": "Thunder Client (https://www.thunderclient.com)",
@@ -41,8 +45,34 @@ function Editor() {
     let response = await axios.request(reqOptions);
     console.log(response.data);
     setOutputText(response.data.message);
+    setLoading(false);
+    actions.setCloseModal();
   };
 
+  const { data, actions } = useBearStore();
+
+  // useEffect(() => {
+  //   if (!toLang?.name) {
+  //     actions.setModal({
+  //       content: () => (
+  //         <TranslationModalContent
+  //           setCurrentLang={setCurrentLang}
+  //           setToLang={setToLang}
+  //           currentLang={currentLang}
+  //           toLang={toLang}
+  //         />
+  //       ),
+  //     });
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    if (loading) {
+      actions.setModal({
+        content: () => <h1 className="text-white text-2xl">Loading...</h1>,
+      });
+    }
+  }, [loading]);
   return (
     <div className="flex w-screen h-screen flex-col">
       <div className="bg-gradient-to-l from-gray-700 via-gray-900 to-black flex flex-row space-x-2 p-1 px-4 items-center">
@@ -103,3 +133,41 @@ function Editor() {
   );
 }
 export default Editor;
+
+const TranslationModalContent = ({
+  currentLang,
+  toLang,
+  setCurrentLang,
+  setToLang,
+}: any) => {
+  const { actions } = useBearStore();
+  return (
+    <div className=" rounded-2xl bg-white p-6 z-50">
+      <div className="font-mono text-xl">Select translation language</div>
+      <div className="">
+        <ThemeDropdown
+          options={languages}
+          selectedOption={currentLang}
+          setOption={setCurrentLang}
+          className=""
+        />
+        <ThemeDropdown
+          options={languages}
+          selectedOption={toLang}
+          setOption={setToLang}
+          className=""
+          onChange={(e) => console.log(e)}
+        />
+      </div>
+      {JSON.stringify(toLang)}
+      <div
+        onClick={() => {
+          actions.setCloseModal();
+        }}
+        className="border-4 cursor-pointer  rounded-full  text-center items-center flex justify-center mt-4 py-2"
+      >
+        Close
+      </div>
+    </div>
+  );
+};

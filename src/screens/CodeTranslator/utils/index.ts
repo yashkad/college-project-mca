@@ -79,4 +79,49 @@ export const languages = [
   {
     name: "Ruby",
   },
+  {
+    name: "JavaScript",
+  },
+  {
+    name: "Swift",
+  },
+  {
+    name: "Go",
+  },
+  {
+    name: "PHP",
+  },
+  {
+    name: "Kotlin",
+  },
+  {
+    name: "C#",
+  },
+  {
+    name: "Rust",
+  },
+  {
+    name: "TypeScript",
+  },
+  {
+    name: "Scala",
+  },
+  {
+    name: "Haskell",
+  },
+  {
+    name: "Perl",
+  },
+  {
+    name: "Lua",
+  },
+  {
+    name: "Elixir",
+  },
+  {
+    name: "Julia",
+  },
+  {
+    name: "Swift",
+  },
 ];

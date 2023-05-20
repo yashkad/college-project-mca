@@ -1,7 +1,8 @@
 import ReactCodeMirror from "@uiw/react-codemirror";
 import React, { useEffect, useState } from "react";
-import { ThemesList } from "../Editor/utils";
+import { ThemesList } from "../CodeTranslator/utils";
 import { socket } from "./socket";
+import { toast } from "react-toastify";
 
 const CodeShare = () => {
   const [theme, setTheme] = useState(ThemesList[5]);
@@ -12,7 +13,7 @@ const CodeShare = () => {
 
   useEffect(() => {
     function onConnect() {
-      alert("connected!");
+      toast("Connected!");
 
       setIsConnected(true);
     }
@@ -28,7 +29,7 @@ const CodeShare = () => {
       setEditorText(value.value);
     }
     function onUsersConnected(value: any) {
-      alert("user connected");
+      toast("user connected");
       console.log(value);
     }
 
@@ -70,9 +71,15 @@ const CodeShare = () => {
     });
   }, []);
 
+  const handleCopyUrl = () => {
+    const currentUrl = window.location.href;
+    navigator.clipboard.writeText(currentUrl);
+    console.log("URL copied to clipboard:", currentUrl);
+    toast("url copied to clipboard");
+  };
   return (
     <div className=" w-full h-screen">
-      <h2
+      {/* <h2
         onClick={() => {
           const data = {
             userId: socket.id,
@@ -85,7 +92,7 @@ const CodeShare = () => {
         }}
       >
         Connection : {isConnected ? "YES" : "No"}
-      </h2>
+      </h2> */}
       <ReactCodeMirror
         value={editorText}
         height="100%"
@@ -93,6 +100,14 @@ const CodeShare = () => {
         onChange={onChange}
         theme={theme.theme}
       />
+
+      <button
+        type="button"
+        className="absolute bottom-5 right-5 text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+        onClick={handleCopyUrl}
+      >
+        Share Link
+      </button>
     </div>
   );
 };

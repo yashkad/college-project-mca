@@ -31,9 +31,9 @@ export default function ThemeDropdown({
             "mt-1 max-h-[300px]  overflow-y-scroll rounded-b-3xl border-2 border-gray bg-white p-2 shadow-lg absolute z-50"
           }
         >
-          {options.map((option: any) => (
+          {options.map((option, index) => (
             <Listbox.Option
-              key={option.name}
+              key={index}
               value={option}
               // disabled={option.unavailable}
               className={`p-1 text-sm font-normal focus:bg-slate-900 hover:bg-gray-400 hover:text-white ${

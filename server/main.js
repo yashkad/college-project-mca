@@ -10,7 +10,8 @@ const { v4 } = require("uuid");
 
 const socket = require("socket.io")(server, {
   cors: {
-    origin: "http://127.0.0.1:5173",
+    // origin: "http://127.0.0.1:5173",
+    origin: "*",
   },
 });
 

@@ -6,6 +6,8 @@ export const useBearStore = create<State, [["zustand/immer", never]]>(
   immer((set, get) => ({
     data: {
       selectedTheme: null,
+      modalContent: null,
+      modalShown: false,
     },
     actions: {
       setSelectedTheme: (theme: any) => {
@@ -13,23 +15,17 @@ export const useBearStore = create<State, [["zustand/immer", never]]>(
           state.data.selectedTheme = theme;
         });
       },
+      setModal: ({ content }: any) => {
+        set((state) => {
+          state.data.modalContent = content;
+          state.data.modalShown = true;
+        });
+      },
+      setCloseModal: () => {
+        set((state) => {
+          state.data.modalShown = false;
+        });
+      },
     },
   }))
 );
-
-// in case to persist data : I am not able to use (persist and immer) at same time
-// so I decided to create a separate store for that purpose.
-// not sure how will this work
-// export const usePersistStore = create(
-//   persist(
-//     (set, get) => ({
-//       data: {
-//         count: 0,
-//       },
-//     }),
-//     {
-//       name: "food-storage", // name of the item in the storage (must be unique)
-//       storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
-//     }
-//   )
-// );

@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "yarn dev && yarn start:server",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
@@ -22,7 +23,9 @@
     "react-ace": "^10.1.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0",
+    "react-toastify": "^9.1.2",
     "socket.io-client": "^4.6.1",
+    "uuid": "^9.0.0",
     "zustand": "^4.3.6"
   },
   "devDependencies": {

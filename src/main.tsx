@@ -1,12 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-
+import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./screens/Home";
-import Editor from "./screens/Editor";
+import Editor from "./screens/CodeTranslator";
 import Ide from "./screens/Ide";
 import CodeShare from "./screens/CodeShare";
+import Modal from "./components/Modal";
+import { ToastContainer } from "react-toastify";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +24,7 @@ const router = createBrowserRouter([
         element: <Ide />,
       },
       {
-        path: "/code-share",
+        path: "/code-share/:id",
         element: <CodeShare />,
       },
     ],
@@ -30,7 +32,8 @@ const router = createBrowserRouter([
 ]);
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    {/* <App /> */}
+    <Modal />
+    <ToastContainer />
     <RouterProvider router={router} />
   </React.StrictMode>
 );
