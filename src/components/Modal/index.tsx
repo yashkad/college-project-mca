@@ -1,7 +1,7 @@
 import { useBearStore } from "../../store/useBearStore";
 
 const Modal = () => {
-  const { data } = useBearStore();
+  const { data, actions } = useBearStore();
   console.log(data);
   const Content = data.modalContent;
   if (data.modalShown)

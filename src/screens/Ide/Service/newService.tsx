@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const url = `http://localhost:3000`;
+// const url = `https://mca-collage-project-backent.vercel.app`;
+const url = "http://localhost:3000";
 
 const getLangId = async (): Promise<any> => {
   return await axios
@@ -16,6 +17,8 @@ interface SubmitCodeData {
   langId: any;
   stdin: any;
   expected_output?: string;
+  headers: any;
+  withCredentials: any;
 }
 
 const submitCode = async (
@@ -24,12 +27,16 @@ const submitCode = async (
   stdin: any,
   expectedOutput = ""
 ): Promise<any> => {
-  console.log(code, langId, stdin, expectedOutput)
+  console.log(code, langId, stdin, expectedOutput);
   const data: SubmitCodeData = {
     code: code,
     langId: langId,
     stdin: stdin,
     expected_output: expectedOutput,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
   };
 
   // console.log("data:",data);

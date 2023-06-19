@@ -1,4 +1,4 @@
-// import React from "react";
+import React from "react";
 // import { createRoot } from "react-dom/client";
 // import {
 //   createBrowserRouter,
@@ -26,13 +26,13 @@
 //   },
 // ]);
 
-// const App = () => {
-//   return (
-//     <div className="flex">
-//       <Sidebar />
-//       <RouterProvider router={router} />
-//     </div>
-//   );
-// };
+const App = () => {
+    return (
+        <div>
+            {/* //       <Sidebar />
+//       <RouterProvider router={router} /> */}
+        </div>
+    );
+};
 
-// export default App;
+export default App;

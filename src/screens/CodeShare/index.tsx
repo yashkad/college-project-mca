@@ -9,7 +9,7 @@ const CodeShare = () => {
 
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [fooEvents, setFooEvents] = useState([]);
-  const [editorText, setEditorText] = useState("// Live code share \n");
+  const [editorText, setEditorText] = useState("");
 
   useEffect(() => {
     function onConnect() {
@@ -58,7 +58,7 @@ const CodeShare = () => {
   }, []);
 
   const onChange = React.useCallback((value: any, viewUpdate: any) => {
-    console.log("value of textbox changed", value);
+    // console.log("value of textbox changed", value);
     setEditorText(value);
 
     const data = {
@@ -94,6 +94,7 @@ const CodeShare = () => {
         Connection : {isConnected ? "YES" : "No"}
       </h2> */}
       <ReactCodeMirror
+        placeholder={"Enter your code..."}
         value={editorText}
         height="100%"
         className={`w-full h-full border-r-8 text-xl`}

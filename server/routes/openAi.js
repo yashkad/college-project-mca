@@ -82,7 +82,36 @@ const handleCodeTranslate = async (req, res) => {
   try {
     const response = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: `##### Translate this code from ${fromLang} into ${toLang}\n### ${fromLang}\n    \n    ${code}\n    \n### ${toLang}`,
+      prompt: `##### Translate this code from into ${toLang}\n### ${fromLang}\n    \n    ${code}\n    \n### ${toLang}`,
+      temperature: 0.5,
+      max_tokens: 150,
+      top_p: 1.0,
+      frequency_penalty: 0.0,
+      presence_penalty: 0.0,
+      stop: ["###"],
+    });
+
+    const completion = response.data.choices[0].text;
+
+    return res.status(200).json({
+      success: true,
+      message: completion,
+    });
+  } catch (error) {
+    return res.response(500).send("error: " + error);
+  }
+};
+
+const handleCodeExplain = async (req, res) => {
+  const { code } = req.body;
+  if (code == null) {
+    return res.status(500).send("send all prompts");
+  }
+
+  try {
+    const response = await openai.createCompletion({
+      model: "text-davinci-003",
+      prompt: `##### Explain this code  \n###    \n    ${code}\n    \n### `,
       temperature: 0.5,
       max_tokens: 150,
       top_p: 1.0,
@@ -103,5 +132,6 @@ const handleCodeTranslate = async (req, res) => {
 };
 
 route.post("/translateCode", handleCodeTranslate);
+route.post("/explainCode", handleCodeExplain);
 
 module.exports = route;

@@ -9,6 +9,7 @@ import Ide from "./screens/Ide";
 import CodeShare from "./screens/CodeShare";
 import Modal from "./components/Modal";
 import { ToastContainer } from "react-toastify";
+import CodeExplain from "./screens/CodeExplain";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "/code-share/:id",
         element: <CodeShare />,
+      },
+      {
+        path: "/code-explain",
+        element: <CodeExplain />,
       },
     ],
   },

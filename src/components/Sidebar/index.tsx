@@ -10,7 +10,7 @@ const Sidebar = ({ className }: any) => {
     { to: "/ide", name: "Online Compiler" },
     { to: `/code-share/${uuidv4()}`, name: "LIVE Code Share" },
     {
-      to: null,
+      to: "/code-explain",
       name: "Code Explain",
       title: "Get an extensive explanation of any piece of code",
     },

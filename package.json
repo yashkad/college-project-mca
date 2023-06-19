@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "yarn dev && yarn start:server",
-    "dev": "vite",
+    "dev": "vite --open --host",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "start:server": "cd server && yarn nodemon main.js"

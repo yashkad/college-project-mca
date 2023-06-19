@@ -16,10 +16,13 @@ const socket = require("socket.io")(server, {
 });
 
 const corsOptions = {
-  origin: "http://127.0.0.1:5173",
+  // origin: "https://codeunion.vercel.app",
+  origin: "*",
   optionsSuccessStatus: 200,
   origin: true,
   credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 const peerServer = ExpressPeerServer(server, { debug: true });
@@ -32,7 +35,7 @@ app.use("/peerServer", peerServer);
 
 app.get("/", (req, res) => {
   //   res.redirect(`/${v4()}`);
-  // res.send("This is the root of the api page");
+  res.send("This is the root of the api page");
   res.redirect(`/${v4()}`);
 });
 

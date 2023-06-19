@@ -18,7 +18,7 @@ function Editor() {
   const [toLang, setToLang] = useState({ name: null });
   const [currentLang, setCurrentLang] = useState({ name: null });
 
-  const [editorText, setEditorText] = useState("// write your code here \n");
+  const [editorText, setEditorText] = useState("");
   const [outputText, setOutputText] = useState("// Output : \n");
   const [loading, setLoading] = useState(false);
 
@@ -36,6 +36,7 @@ function Editor() {
       code: editorText,
     });
     let reqOptions = {
+      // url: "https://mca-collage-project-backent.vercel.app/api/translateCode",
       url: "http://localhost:3000/api/translateCode",
       method: "POST",
       headers: headersList,
@@ -104,6 +105,7 @@ function Editor() {
           extensions={[javascript({ jsx: true })]}
           onChange={onChange}
           theme={theme.theme}
+          placeholder={"Enter your code..."}
         />
         <CodeMirror
           value={`${outputText}`}

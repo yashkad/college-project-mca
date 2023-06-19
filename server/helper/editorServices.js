@@ -1,9 +1,11 @@
-const axios = require('axios')
-const btoa = require('btoa')
+const axios = require("axios");
+const btoa = require("btoa");
+require("dotenv").config();
 
 const BASE = "https://judge0-ce.p.rapidapi.com";
 const HEADERS = {
   "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
+  // "X-RapidAPI-Key": process.env.X_RapidAPI_Key,
   "X-RapidAPI-Key": "bf5bf7ce00msh8d6e256c49ca1e5p1a2826jsne8d27a1059e8",
 };
 
@@ -63,9 +65,8 @@ const getOutputByToken = async (token) => {
     .catch((e) => console.log(e));
 };
 
-
 module.exports = {
-    getAllLanguages,
-    getCodeToken,
-    getOutputByToken
-}
+  getAllLanguages,
+  getCodeToken,
+  getOutputByToken,
+};
